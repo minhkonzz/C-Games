@@ -53,8 +53,7 @@ class Snake {
       Snake(int _dir, int _len, int _type, Point _p) {
       setDir(UP);
       setType(_type);
-      Circle part(_p.getX(), _p.getY(), 5);
-      body.push_back(part);
+      body.push_back(Circle(_p.getX(), _p.getY(), 5))
    }
    void setDir(int _dir) {
       if(_dir == UP || _dir == DOWN || _dir == LEFT || _dir == RIGHT) dir = _dir;
