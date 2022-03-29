@@ -173,8 +173,8 @@ class Game {
       void loadPlayArea() {
          for(int i = 0; i < 7; i++) rectangle(15 - i, 20 - i, MAX_X - 300 + i, MAX_Y - 20 + i);
       }
-      void notifyWinner(Snake s) {
-         std::cout << "WINNER: " << (s.getType() == FIRE_SNAKE ? "FIRE SNAKE" : "WATER SNAKE") << std::endl;
+      void notifyWinner(Snake * s) {
+         std::cout << (s == NULL ? "Draw!" : (s->getType() == FIRE_SNAKE ? "WIN: FIRE SNAKE" : "WIN: WATER SNAKE")) << std::endl;
       }
       void renderText(Snake * s, std::string text, int size, int x, int y) {
 	 if(s != NULL) text += (s->getType() == FIRE_SNAKE ? "Diem So Ran Lua: " : "Diem So Ran Nuoc: ") + itos(s->getLen() - 1);
@@ -200,7 +200,7 @@ class Game {
 	 CountdownTimer timer(3, 0);
 	 int c = 0;
 	 bool isGameOver = false, reset_s = false;
-	 while(!isGameOver && timer.getMinutes() >= 0) {
+	 while(!isGameOver && timer.getMinutes() >= 0 && timer.getSecond() > 0) {
 	    setcolor(11);
 	    renderText(NULL, itos(timer.getMinutes()) + " : " + itos(timer.getSecond()), 6, MAX_X - 230, 90);
 	    setcolor(WHITE);
@@ -249,6 +249,7 @@ class Game {
 	    c++;
 	    cleardevice();  
 	 }
+	 notifyWinner(fs.getLen() > ws.getLen() ? &fs : (fs.getLen() < ws.getLen() ? &ws : NULL));
       }
       ~Game() {}
 };
